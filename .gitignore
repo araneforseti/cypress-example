@@ -2,3 +2,8 @@
 
 # temporary files
 *.swp
+.DS_Store
+
+# test run output files
+**/videos/**
+**/screenshots/**
