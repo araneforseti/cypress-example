@@ -1,8 +1,5 @@
-//import HeaderComponent from 'HeaderComponent'
-
 export default class InventoryPage {
   constructor() {
- //   this.header = new HeaderComponent()
   }
 
   amIHere() {

@@ -6,11 +6,17 @@
 import LoginPage from '../pages/LoginPage'
 import InventoryPage from '../pages/InventoryPage'
 import CartPage from '../pages/CartPage'
+import CheckoutInfoPage from '../pages/CheckoutInfoPage'
+import CheckoutOverviewPage from '../pages/CheckoutOverviewPage'
+import CheckoutCompletePage from '../pages/CheckoutCompletePage'
 
 describe('Checkout Flow', () => {
   const login = new LoginPage()
   const inventory = new InventoryPage()
   const cart = new CartPage()
+  const checkoutInfo = new CheckoutInfoPage()
+  const checkoutOverview = new CheckoutOverviewPage()
+  const checkoutComplete = new CheckoutCompletePage()
 
   context('Standard user is able to add items to cart', () => {
     beforeEach(() => {
@@ -25,22 +31,22 @@ describe('Checkout Flow', () => {
     })
 
     it('Standard user can checkout', () => {
-      cy.get('button[name=checkout]').click()
-      cy.location('pathname', {timeout:60000}).should('include', '/checkout-step-one.html')
-      cy.get('input[name=firstName]').type('Tester')
-      cy.get('input[name=lastName]').type('McTesty')
-      cy.get('input[name=postalCode]').type('12345')
-      cy.get('input[name=continue]').click()
-      cy.location('pathname', {timeout:60000}).should('include', '/checkout-step-two.html')
-      cy.get('button[name=finish]').click()
-      cy.location('pathname', {timeout:60000}).should('include', '/checkout-complete.html')
-      cy.get('.complete-header').should('contain', 'THANK YOU FOR YOUR ORDER')
+      cart.checkout()
+      checkoutInfo.amIHere()
+      checkoutInfo.enterFirstName('Tester')
+      checkoutInfo.enterLastName('McTesty')
+      checkoutInfo.enterPostalCode('12345')
+      checkoutInfo.submit()
+      checkoutOverview.amIHere()
+      checkoutOverview.finish()
+      checkoutComplete.amIHere()
+      checkoutComplete.checkCheckoutCompleteMessage()
     })
 
     it('Standard user can remove items from cart', () => {
-      cy.get('button[name=remove-sauce-labs-bike-light]').click()
-      cy.get('.shopping_cart_link').should('not.contain', '1')
-      cy.get('.cart_item').should('not.exist')
+      cart.removeBike()
+      cart.getCartLink().should('not.contain', '1')
+      cart.getCartItems().should('not.exist')
     })
   })
 })
