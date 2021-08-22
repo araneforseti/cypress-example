@@ -3,7 +3,7 @@ export default class InventoryPage {
   }
 
   amIHere() {
-    cy.location('pathname', {timeout:60000}).should('include', '/inventory.html')
+    return (String(cy.url).includes('/inventory.html') != null)
   }
 
   addBikeToCart() {
@@ -11,10 +11,14 @@ export default class InventoryPage {
   }
 
   canIRemoveBike() {
-    cy.get('button[name=remove-sauce-labs-bike-light]').should('contain', 'Remove')
+    return (cy.get('button[name=remove-sauce-labs-bike-light]').contains('Remove') != null)
   }
   
   getCartLink() {
     return cy.get('.shopping_cart_link')
+  }
+
+  goToCart() {
+    this.getCartLink().click()
   }
 }

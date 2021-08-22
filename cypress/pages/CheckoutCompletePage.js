@@ -2,7 +2,7 @@ export default class CheckoutCompletePage {
   constructor() {}
 
   amIHere() {
-    cy.location('pathname', {timeout:60000}).should('include', '/checkout-complete.html')
+    return (String(cy.url).includes('/checkout-complete.html') != null)
   }
   
   checkCheckoutCompleteMessage() {

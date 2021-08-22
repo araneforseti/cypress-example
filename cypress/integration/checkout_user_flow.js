@@ -22,24 +22,24 @@ describe('Checkout Flow', () => {
     beforeEach(() => {
       login.visit()
       login.signIn('standard_user', 'secret_sauce') //normally never commit secrets, although these aren't terribly secret
-      inventory.amIHere()
+      expect(inventory.amIHere(), 'on inventory page').to.equal(true)
       inventory.addBikeToCart()
-      inventory.canIRemoveBike()
+      expect(inventory.canIRemoveBike(), 'able to remove bike').to.equal(true)
       inventory.getCartLink().should('contain', '1')
-      inventory.getCartLink().click()
-      cart.amIHere()
+      inventory.goToCart()
+      expect(cart.amIHere(), 'On cart page').to.equal(true)
     })
 
     it('Standard user can checkout', () => {
       cart.checkout()
-      checkoutInfo.amIHere()
+      expect(checkoutInfo.amIHere()).to.equal(true)
       checkoutInfo.enterFirstName('Tester')
       checkoutInfo.enterLastName('McTesty')
       checkoutInfo.enterPostalCode('12345')
       checkoutInfo.submit()
-      checkoutOverview.amIHere()
+      expect(checkoutOverview.amIHere(), 'on checkout overview').to.equal(true)
       checkoutOverview.finish()
-      checkoutComplete.amIHere()
+      expect(checkoutComplete.amIHere(), 'on checkout complete').to.equal(true)
       checkoutComplete.checkCheckoutCompleteMessage()
     })
 

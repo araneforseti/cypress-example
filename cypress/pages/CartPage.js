@@ -2,7 +2,7 @@ export default class CartPage {
   constructor() {}
 
   amIHere() {
-    cy.get('.title').should('contain', 'Your Cart')
+    return (cy.get('.title').contains('Your Cart') != null)
   }
 
   checkout() {
