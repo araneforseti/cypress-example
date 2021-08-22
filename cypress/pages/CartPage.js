@@ -1,5 +1,10 @@
+import HeaderPage from '../pages/HeaderPage'
+
 export default class CartPage {
-  constructor() {}
+
+  constructor() {
+    this.headerPage = new HeaderPage();
+  }
 
   amIHere() {
     return (cy.get('.title').contains('Your Cart') != null)
@@ -14,7 +19,7 @@ export default class CartPage {
   }
  
   getCartLink() {
-    return cy.get('.shopping_cart_link')
+    return this.headerPage.getCartLink()
   }
 
   getCartItems() {

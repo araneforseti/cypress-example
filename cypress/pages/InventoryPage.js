@@ -1,5 +1,8 @@
+import HeaderPage from '../pages/HeaderPage'
+
 export default class InventoryPage {
   constructor() {
+    this.headerPage = new HeaderPage();
   }
 
   amIHere() {
@@ -15,7 +18,7 @@ export default class InventoryPage {
   }
   
   getCartLink() {
-    return cy.get('.shopping_cart_link')
+    return this.headerPage.getCartLink()
   }
 
   goToCart() {
